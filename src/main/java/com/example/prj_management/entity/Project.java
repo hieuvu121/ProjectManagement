@@ -2,6 +2,7 @@ package com.example.prj_management.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -23,11 +24,8 @@ public class Project {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
-
-    @Column(nullable = false)
+    @CreationTimestamp
+    @Column(nullable = false,updatable = false)
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)

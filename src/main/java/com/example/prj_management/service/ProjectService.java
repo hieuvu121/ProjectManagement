@@ -1,0 +1,68 @@
+package com.example.prj_management.service;
+
+import com.example.prj_management.dto.request.ProjectRequest;
+import com.example.prj_management.dto.response.ProjectResponse;
+import com.example.prj_management.entity.Project;
+import com.example.prj_management.entity.ProjectMember;
+import com.example.prj_management.entity.User;
+import com.example.prj_management.enums.Role;
+import com.example.prj_management.repository.ProjectMemberRepository;
+import com.example.prj_management.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class ProjectService {
+    private final ProjectRepository projectRepository;
+    private final ProjectMemberRepository projectMemberRepository;
+    private final UserService userService;
+
+    public ProjectResponse createProject(ProjectRequest request) {
+        if (projectRepository.findByName(request.getName()).isPresent()) {
+            throw new RuntimeException("project name existed");
+        }
+
+        User currUser = userService.findCurrUser();
+        Project savedProject = projectRepository.save(
+                Project.builder()
+                        .name(request.getName())
+                        .build()
+        );
+
+        projectMemberRepository.save(
+                ProjectMember.builder()
+                        .project(savedProject)
+                        .user(currUser)
+                        .role(Role.OWNER)
+                        .build()
+        );
+
+        return ProjectResponse.builder()
+                .name(savedProject.getName())
+                .createdAt(savedProject.getCreatedAt())
+                .build();
+    }
+
+    public List<ProjectResponse> getAllProjects(Long userId) {
+        return projectRepository.findAllByUserId(userId).stream()
+                .map(p -> ProjectResponse.builder()
+                        .name(p.getName())
+                        .createdAt(p.getCreatedAt())
+                        .build())
+                .toList();
+    }
+
+    public ProjectResponse getSingleProjects(Long userId,Long projectId){
+        Project project=projectRepository.findByUserIdAndProjectId(userId,projectId)
+                .orElseThrow(()->new ResourceNotFoundException("Project not found"));
+        return ProjectResponse.builder()
+                .name(project.getName())
+                .createdAt(project.getCreatedAt())
+                .build();
+    }
+
+}

@@ -1,4 +1,4 @@
-package com.example.prj_management.dto;
+package com.example.prj_management.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

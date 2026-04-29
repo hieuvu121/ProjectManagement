@@ -1,4 +1,4 @@
-package com.example.prj_management.dto;
+package com.example.prj_management.dto.request;
 
 import lombok.Data;
 

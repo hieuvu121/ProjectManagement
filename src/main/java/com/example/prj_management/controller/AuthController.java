@@ -1,14 +1,12 @@
 package com.example.prj_management.controller;
 
-import com.example.prj_management.dto.LoginRequest;
-import com.example.prj_management.dto.LoginResponse;
-import com.example.prj_management.dto.RegisterRequest;
-import com.example.prj_management.security.JwtUtil;
+import com.example.prj_management.dto.request.LoginRequest;
+import com.example.prj_management.dto.response.LoginResponse;
+import com.example.prj_management.dto.request.RegisterRequest;
 import com.example.prj_management.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

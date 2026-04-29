@@ -1,8 +1,8 @@
 package com.example.prj_management.service;
 
-import com.example.prj_management.dto.LoginRequest;
-import com.example.prj_management.dto.LoginResponse;
-import com.example.prj_management.dto.RegisterRequest;
+import com.example.prj_management.dto.request.LoginRequest;
+import com.example.prj_management.dto.response.LoginResponse;
+import com.example.prj_management.dto.request.RegisterRequest;
 import com.example.prj_management.entity.TokenBlacklist;
 import com.example.prj_management.entity.User;
 import com.example.prj_management.repository.TokenBlacklistRepository;
