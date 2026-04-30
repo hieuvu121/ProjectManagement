@@ -21,13 +21,13 @@ public class ProjectController {
         return ResponseEntity.status(HttpStatus.CREATED).body(projectService.createProject(request));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<ProjectResponse>> getAllProjects(@PathVariable Long userId) {
-        return ResponseEntity.ok(projectService.getAllProjects(userId));
+    @GetMapping
+    public ResponseEntity<List<ProjectResponse>> getAllProjects() {
+        return ResponseEntity.ok(projectService.getAllProjects());
     }
 
-    @GetMapping("/user/{userId}/{projectId}")
-    public ResponseEntity<ProjectResponse> getSingleProject(@PathVariable Long userId, @PathVariable Long projectId){
-        return ResponseEntity.ok(projectService.getSingleProjects(userId,projectId));
+    @GetMapping("/{projectId}")
+    public ResponseEntity<ProjectResponse> getSingleProject(@PathVariable Long projectId) {
+        return ResponseEntity.ok(projectService.getSingleProject(projectId));
     }
 }

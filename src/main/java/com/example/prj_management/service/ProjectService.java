@@ -30,6 +30,7 @@ public class ProjectService {
         Project savedProject = projectRepository.save(
                 Project.builder()
                         .name(request.getName())
+                        .owner(currUser)
                         .build()
         );
 
@@ -41,27 +42,29 @@ public class ProjectService {
                         .build()
         );
 
-        return ProjectResponse.builder()
-                .name(savedProject.getName())
-                .createdAt(savedProject.getCreatedAt())
-                .build();
+        return toResponse(savedProject);
     }
 
-    public List<ProjectResponse> getAllProjects(Long userId) {
+    public List<ProjectResponse> getAllProjects() {
+        Long userId = userService.findCurrUser().getId();
         return projectRepository.findAllByUserId(userId).stream()
-                .map(p -> ProjectResponse.builder()
-                        .name(p.getName())
-                        .createdAt(p.getCreatedAt())
-                        .build())
+                .map(this::toResponse)
                 .toList();
     }
 
-    public ProjectResponse getSingleProjects(Long userId,Long projectId){
-        Project project=projectRepository.findByUserIdAndProjectId(userId,projectId)
-                .orElseThrow(()->new ResourceNotFoundException("Project not found"));
+    public ProjectResponse getSingleProject(Long projectId) {
+        Long userId = userService.findCurrUser().getId();
+        Project project = projectRepository.findByUserIdAndProjectId(userId, projectId)
+                .orElseThrow(() -> new ResourceNotFoundException("Project not found"));
+        return toResponse(project);
+    }
+
+    private ProjectResponse toResponse(Project p) {
         return ProjectResponse.builder()
-                .name(project.getName())
-                .createdAt(project.getCreatedAt())
+                .id(p.getId())
+                .name(p.getName())
+                .ownerId(p.getOwner().getId())
+                .createdAt(p.getCreatedAt())
                 .build();
     }
 

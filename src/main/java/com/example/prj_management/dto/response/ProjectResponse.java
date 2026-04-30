@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 public class ProjectResponse {
+    private Long id;
     private String name;
+    private Long ownerId;
     private LocalDateTime createdAt;
 }

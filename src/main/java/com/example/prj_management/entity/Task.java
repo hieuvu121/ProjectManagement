@@ -3,6 +3,7 @@ package com.example.prj_management.entity;
 import com.example.prj_management.enums.TaskStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class Task {
     @Column(nullable = false)
     private TaskStatus status;
 
+    @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
