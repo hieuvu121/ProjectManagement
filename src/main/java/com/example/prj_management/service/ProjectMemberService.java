@@ -8,7 +8,7 @@ import com.example.prj_management.repository.ProjectMemberRepository;
 import com.example.prj_management.repository.ProjectRepository;
 import com.example.prj_management.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
+import com.example.prj_management.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service

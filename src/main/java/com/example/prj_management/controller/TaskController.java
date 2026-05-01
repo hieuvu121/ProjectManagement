@@ -29,8 +29,16 @@ public class TaskController {
         return ResponseEntity.ok(taskService.getAllTask(projectId));
     }
 
+    @PreAuthorize("@authService.isAssignTask(#taskId)")
     @PatchMapping("/{taskId}")
     public ResponseEntity<TaskResponse> update(@PathVariable Long taskId, @RequestBody TaskRequest request){
         return ResponseEntity.ok(taskService.updateTask(taskId,request));
+    }
+
+    @PreAuthorize("@authService.isMember(#projectId)")
+    @DeleteMapping("/{taskId}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long projectId, @PathVariable Long taskId){
+        taskService.deleteTask(taskId);
+        return ResponseEntity.noContent().build();
     }
 }

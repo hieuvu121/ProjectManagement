@@ -12,7 +12,7 @@ import com.example.prj_management.repository.TaskAssignRepository;
 import com.example.prj_management.repository.TaskRepository;
 import com.example.prj_management.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.common.errors.ResourceNotFoundException;
+import com.example.prj_management.exception.ResourceNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -128,6 +128,13 @@ public class TaskService {
                 .toList();
 
         return toResponse(task, updatedAssigneeIds);
+    }
+
+    @Transactional
+    public void deleteTask(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+        taskRepository.delete(task);
     }
 
     private TaskResponse toResponse(Task task, List<Long> assigneeIds) {
