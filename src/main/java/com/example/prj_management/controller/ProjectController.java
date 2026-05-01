@@ -6,6 +6,7 @@ import com.example.prj_management.service.ProjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ProjectController {
         return ResponseEntity.ok(projectService.getAllProjects());
     }
 
+    @PreAuthorize("@authService.isMember(#projectId)")
     @GetMapping("/{projectId}")
     public ResponseEntity<ProjectResponse> getSingleProject(@PathVariable Long projectId) {
         return ResponseEntity.ok(projectService.getSingleProject(projectId));

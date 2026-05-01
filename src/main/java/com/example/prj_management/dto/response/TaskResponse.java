@@ -1,20 +1,23 @@
-package com.example.prj_management.dto.request;
+package com.example.prj_management.dto.response;
 
 import com.example.prj_management.enums.TaskStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class TaskRequest {
+@Builder
+public class TaskResponse {
+    private Long id;
+    private Long projectId;
     private String title;
     private String description;
     private TaskStatus status;
     private List<Long> assigneeIds;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
