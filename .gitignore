@@ -34,3 +34,6 @@ build/
 
 ### Docs ###
 docs/
+
+### Environment ###
+.env

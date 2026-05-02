@@ -4,6 +4,7 @@ services:
     environment:
       MYSQL_DATABASE: prj_management
       MYSQL_USER: ${DB_USERNAME}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
       - "3306:3306"
@@ -20,11 +21,11 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/prj_management
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       DB_USERNAME: ${DB_USERNAME}
       DB_PASSWORD: ${DB_PASSWORD}
-      JWT_SECRET: bXlTdXBlclNlY3JldEtleUZvckpXVEF1dGhlbnRpY2F0aW9u
-      JWT_EXPIRATION: 86400000
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_EXPIRATION: ${JWT_EXPIRATION}
     depends_on:
       db:
         condition: service_healthy
