@@ -38,7 +38,7 @@ public class TaskController {
     @PreAuthorize("@authService.isMember(#projectId)")
     @DeleteMapping("/{taskId}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long projectId, @PathVariable Long taskId){
-        taskService.deleteTask(taskId);
+        taskService.deleteTask(projectId, taskId);
         return ResponseEntity.noContent().build();
     }
 }

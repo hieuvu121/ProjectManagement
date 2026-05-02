@@ -131,9 +131,15 @@ public class TaskService {
     }
 
     @Transactional
-    public void deleteTask(Long taskId) {
+    public void deleteTask(Long projectId, Long taskId) {
         Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new ResourceNotFoundException("Task not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("task not found"));
+
+        if (!task.getProject().getId().equals(projectId)) {
+            throw new ResourceNotFoundException("task not found in this project");
+        }
+
+        taskAssignRepository.deleteAll(task.getAssignees());
         taskRepository.delete(task);
     }
 
